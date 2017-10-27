@@ -80,7 +80,6 @@ public class CEnemyManager : CSingletonPattern<CEnemyManager>
         EnemyInfo info = enemy.GetComponent<CEnemy>().enemyInfo;
         info.index = _info.index;
         info.sprite = _info.sprite;
-        info.prefab = _info.prefab;
         info.name = _info.name;
         info.healthPoint = _info.healthPoint;
         info.attackPoint = _info.attackPoint;

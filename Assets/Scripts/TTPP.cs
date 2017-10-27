@@ -71,7 +71,6 @@ namespace TTPP
     {
         public int index;
         public Sprite sprite;
-        public GameObject prefab;
         public int leftTurn;
 
         public EnemyInfo() { }

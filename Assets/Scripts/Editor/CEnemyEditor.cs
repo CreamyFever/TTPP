@@ -192,13 +192,9 @@ public class CEnemyEditor : EditorWindow
 
         startX += 5;
         startY += 3;
-        
-        EditorGUI.LabelField(new Rect(startX, startY += spaceY, width, height), "Prefab:");
-        enemy.prefab = (GameObject)EditorGUI.ObjectField(new Rect(startX + spaceX, startY, widthSmall * 2, height),
-            enemy.prefab, typeof(GameObject), false);
 
         EditorGUI.LabelField(new Rect(startX, startY += spaceY, width, height), "Sprite: ");
-        enemy.sprite = (Sprite)EditorGUI.ObjectField(new Rect(startX + spaceX, startY, widthSmall * 2, height),
+        enemy.sprite = (Sprite)EditorGUI.ObjectField(new Rect(startX + spaceX, startY, widthSmall * 3, height),
             enemy.sprite, typeof(Sprite), false);
 
         EditorGUI.LabelField(new Rect(startX, startY += spaceY, width, height), "Name: ");

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 using TTPP;
@@ -34,6 +32,13 @@ public class CUIManager : CSingletonPattern<CUIManager>
 
     #region CenterUI
     Image warningImage;
+
+    Image stageClearPanel;
+    Button okButton;
+
+    Image gameOverPanel;
+    Button continueButton;
+    Button goStageSelectButton;
     #endregion
 
     #region EnemyUI
@@ -65,9 +70,20 @@ public class CUIManager : CSingletonPattern<CUIManager>
         }
 
         genLeftPanelsText = GameObject.Find(Constants.UI_LEFT_PANELS_COUNT_TEXT).GetComponent<Text>();
-
+        
         warningImage = GameObject.Find(Constants.UI_WARNING_IMAGE).GetComponent<Image>();
         warningImage.gameObject.SetActive(false);
+        
+        stageClearPanel = GameObject.Find(Constants.UI_STAGE_CLEAR_PANEL).GetComponent<Image>();
+        okButton = GameObject.Find(Constants.UI_STAGE_CLEAR_OK_BUTTON).GetComponent<Button>();
+        stageClearPanel.gameObject.SetActive(false);
+
+        gameOverPanel = GameObject.Find(Constants.UI_GAME_OVER_PANEL).GetComponent<Image>();
+        continueButton = GameObject.Find(Constants.UI_CONTINUE_BUTTON).GetComponent<Button>();
+        goStageSelectButton = GameObject.Find(Constants.UI_GO_STAGE_SELECT_BUTTON).GetComponent<Button>();
+        gameOverPanel.gameObject.SetActive(false);
+
+
 
         for (int i = 0; i < ENEMY_UI_COUNT; i++)
         {
@@ -79,6 +95,7 @@ public class CUIManager : CSingletonPattern<CUIManager>
             leftTurnText[i] = enemyUITrans[i].GetChild(Constants.UI_ENEMY_LEFT_TURN_TEXT).GetComponent<Text>();
         }
     }
+    
 
     public void ShowTopUI(int panelCount)
     {
@@ -195,4 +212,14 @@ public class CUIManager : CSingletonPattern<CUIManager>
     {
         warningImage.gameObject.SetActive(active);
     }
+
+    public void ShowStageClearPanel(bool active)
+    {
+        stageClearPanel.gameObject.SetActive(active);
+    }
+
+    public void ShowGameOverPanel(bool active)
+    {
+        gameOverPanel.gameObject.SetActive(active);
+    }    
 }

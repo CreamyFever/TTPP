@@ -15,13 +15,17 @@ public class CPlayer : MonoBehaviour
     public int wavePanelCount;      // タッチしたパネルと逃したパネルの和。CSpawnManagerのallPanelCountと比べるために宣言
 
     const int NEED_TO_COMBO = 3;
+
+    float healthPoint = 100.0f;
+    float shieldPoint = 20.0f;
+    float attackPoint = 10.0f;
     
     Stack<PanelColor> touchedPanelColorStack = new Stack<PanelColor>();
     
 
     private void Awake()
     {
-        info = new PlayerInfo("PLAYER", 100, 10, 20);
+        info = new PlayerInfo("PLAYER", healthPoint, attackPoint, shieldPoint);
         InitializePlayerValue();
 
         wavePanelCount = 0;
@@ -79,6 +83,20 @@ public class CPlayer : MonoBehaviour
         touchedPanelColorStack.Clear();
     }
 
+    public void ContinueGame()
+    {
+        isAlive = true;
+        info.healthPoint = healthPoint;
+        info.shieldPoint = shieldPoint;
+        info.attackPoint = attackPoint;
+
+        CSpawnManager.Instance.ClearAllPanels();
+        InitializePlayerValue();
+        wavePanelCount = 0;
+
+        CSpawnManager.Instance.InitializeToSpawnPanels();
+    }
+
     void AttackEnemy(GameObject _enemy)
     {
         CEnemy enemy = _enemy.GetComponent<CEnemy>();
@@ -125,7 +143,10 @@ public class CPlayer : MonoBehaviour
         if (nextWave != null)
             nextWave();
         if (changeBGM != null)
+        {
             changeBGM(Constants.SOUND_BGM_RESULT);
+            CUIManager.Instance.ShowStageClearPanel(true);
+        }
     }
 
     void DecideNextWaveState()
@@ -260,10 +281,8 @@ public class CPlayer : MonoBehaviour
         if (info.healthPoint <= 0.0f)
         {
             isAlive = false;
-            Debug.Log("You Died");
-
-            Time.timeScale = 0.0f;
-            // 컨티뉴, 나가기 팝업 창 띄우기
+            CSpawnManager.Instance.ClearAllPanels();
+            CUIManager.Instance.ShowGameOverPanel(true);
         }
     }
 }

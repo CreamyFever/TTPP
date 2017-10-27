@@ -46,6 +46,13 @@ public struct Constants
 
     #region UICenter
     public const string UI_WARNING_IMAGE = UI_CANVAS + "/WarningImage";
+
+    public const string UI_STAGE_CLEAR_PANEL = UI_CANVAS + "/StageClearPanel";
+    public const string UI_STAGE_CLEAR_OK_BUTTON = UI_STAGE_CLEAR_PANEL + "/GoStageSelectButton";
+
+    public const string UI_GAME_OVER_PANEL = UI_CANVAS + "/GameOverPanel";
+    public const string UI_CONTINUE_BUTTON = UI_GAME_OVER_PANEL + "/ContinueButton";
+    public const string UI_GO_STAGE_SELECT_BUTTON = UI_GAME_OVER_PANEL + "/GoStageSelectButton";
     #endregion
 
     #region UIEnemyPanel

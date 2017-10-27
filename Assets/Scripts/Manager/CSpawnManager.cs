@@ -91,7 +91,7 @@ public class CSpawnManager : CSingletonPattern<CSpawnManager>
         
         waitSec = new WaitForSeconds(subwave.interval);
 
-        while (CUtility.GetEnemyCount() != 0)
+        while (CUtility.GetEnemyCount() != 0　&& leftPanelCount > 0)
         {
             if (subwave.spawnCount > 0)
             {

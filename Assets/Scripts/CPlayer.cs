@@ -68,6 +68,9 @@ public class CPlayer : MonoBehaviour
         }
     }   
 
+    /// <summary>
+    /// シールドポイントが徐々に回復する。
+    /// </summary>
     public void RecoverShieldPoint()
     {
         if(info.shieldPoint < info.maxShieldPoint)
@@ -97,6 +100,10 @@ public class CPlayer : MonoBehaviour
         CSpawnManager.Instance.InitializeToSpawnPanels();
     }
 
+    /// <summary>
+    /// 敵1体を攻める。
+    /// </summary>
+    /// <param name="_enemy"></param>
     void AttackEnemy(GameObject _enemy)
     {
         CEnemy enemy = _enemy.GetComponent<CEnemy>();
@@ -128,6 +135,13 @@ public class CPlayer : MonoBehaviour
         yield break;
     }
 
+    /// <summary>
+    /// ボス戦を前にしたり、ステージをクリアしたり
+    /// </summary>
+    /// <param name="soundID"></param>
+    /// <param name="nextWave"></param>
+    /// <param name="changeBGM"></param>
+    /// <returns></returns>
     IEnumerator SpecialEvent(int soundID, System.Action nextWave = null, System.Action<int> changeBGM = null)
     {
         CSoundManager.Instance.StopBgm();
@@ -222,6 +236,10 @@ public class CPlayer : MonoBehaviour
         　return touchedPanelCount * (1 + combo * 0.1f) * info.attackPoint;
     }
 
+    /// <summary>
+    /// タッチしたパネルを消す(実は非アクティブにする)。
+    /// </summary>
+    /// <param name="_panel"></param>
     void DestroyPanels(GameObject _panel)
     {
         CPanel panel = _panel.GetComponent<CPanel>();
@@ -243,20 +261,20 @@ public class CPlayer : MonoBehaviour
     /// <summary>
     /// 前にタッチしたパネルの色と同じなら、コンボが繋げる。
     /// 同じ色のパネルを連続に3回タッチしたらコンボ数が上がる。
-    /// 違う色をタッチしたらコンボスタックを貯めなおすようにする。
+    /// 違う色をタッチしたらコンボスタックを増やしなおすようにする。
     /// </summary>
     /// <param name="_panel"></param>
     void CheckCombo(PanelColor color)
     {
         if (needToCombo > 0)
         {
-            if (color == touchedPanelColorStack.Peek())
+            if (color == touchedPanelColorStack.Peek())         // タッチしたパネルと以前のパネルの色が同じならコンボスタック増加
             {
                 needToCombo += 1;
 
-                if (needToCombo == NEED_TO_COMBO)
+                if (needToCombo == NEED_TO_COMBO)               // 同じ色のパネルを連続に三つタッチしたらコンボを増やす。
                 {
-                    needToCombo = 0;
+                    needToCombo = 0;                            // コンボスタック初期化
                     combo++;
 
                     CSoundManager.Instance.PlayEffectSound(Constants.SOUND_ID_GOT_COMBO);
@@ -271,18 +289,23 @@ public class CPlayer : MonoBehaviour
         else needToCombo = 1;
     }
 
+
+    /// <summary>
+    /// ダメージを受けたら呼び出される。
+    /// </summary>
+    /// <param name="damage"></param>
     public void OnDamaged(float damage)
     {
         CUtility.DecreaseHealthPoint(info, damage);
 
-        combo = 0; needToCombo = 0;
+        combo = 0; needToCombo = 0;                 // コンボが途切れた。
         touchedPanelColorStack.Clear();
 
         if (info.healthPoint <= 0.0f)
         {
             isAlive = false;
             CSpawnManager.Instance.ClearAllPanels();
-            CUIManager.Instance.ShowGameOverPanel(true);
+            CUIManager.Instance.ShowGameOverPanel(true);    // ゲームオーバーパネルを有効にする。
         }
     }
 }

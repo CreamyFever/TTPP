@@ -65,6 +65,10 @@ public class CPanel : MonoBehaviour
         DecideMovePattern(subWave);
     }
 
+    /// <summary>
+    /// パネルの動きタイプによって動きパターンが異なる。
+    /// </summary>
+    /// <param name="subWave"></param>
     void DecideMovePattern(PanelSubWave subWave)
     {
         switch(subWave.info.moveType)
@@ -180,7 +184,6 @@ public class CPanel : MonoBehaviour
         
         int spriteIndex = (int)subWave.info.moveType * 6 + (int)subWave.info.panelColor;
 
-        transform.GetChild(0).GetComponent<SpriteRenderer>().sprite
-            = CPanelManager.Instance.panelSprites[spriteIndex];
+        transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = CPanelManager.Instance.panelSprites[spriteIndex];
     }
 }

@@ -110,6 +110,7 @@ public class CPlayer : MonoBehaviour
         float damage = CalculateDamage();
         
         CSoundManager.Instance.PlayEffectSound(Constants.SOUND_ID_PLAYER_ATTACK);
+        StartCoroutine(CUtility.ShowEffect(EffectType.Damage, enemy.transform.position));
         enemy.OnDamaged(damage);
 
         InitializePlayerValue();
@@ -200,6 +201,7 @@ public class CPlayer : MonoBehaviour
         foreach (var enemy in enemies)
         {
             enemy.OnDamaged(damage);
+            StartCoroutine(CUtility.ShowEffect(EffectType.Damage, enemy.transform.position));
 
             enemy.enemyInfo.leftTurn--;
             enemy.AttackPlayer();

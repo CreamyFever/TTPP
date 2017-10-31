@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -82,27 +83,42 @@ public static class CUtility
         return parent;
     }
 
-    public static void DecreaseHealthPoint(UnitInfo info, float val)
+    public static float DecreaseHealthPoint(UnitInfo info, float val)
     {
+        float resultDamage = 0.0f;
+
         // 残りのシールドポイントがダメージより大きい場合
         if (info.shieldPoint > val)
         {
             info.shieldPoint -= val;
+            resultDamage = 0;
         }
         else if (info.shieldPoint <= val)
         {
             float setOffDmg = info.shieldPoint;
             info.shieldPoint = 0;
 
-            info.healthPoint -= (val - setOffDmg);
+            resultDamage = val - setOffDmg;
+            info.healthPoint -= resultDamage;
         }
 
         if (info.healthPoint < 0)
             info.healthPoint = 0;
+
+        return resultDamage;
     }
 
     public static int GetEnemyCount()
     {
         return UnityEngine.Object.FindObjectsOfType<CEnemy>().Length;
+    }
+
+    public static IEnumerator ShowEffect(EffectType type, Vector3 pos)
+    {
+        GameObject obj = CEffectManager.Instance.ShowEffect(type, pos);
+
+        yield return new WaitForSeconds(1.5f);
+
+        obj.SetActive(false);
     }
 }

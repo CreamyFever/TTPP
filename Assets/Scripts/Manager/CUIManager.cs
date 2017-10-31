@@ -53,6 +53,8 @@ public class CUIManager : CSingletonPattern<CUIManager>
 
     private void Awake()
     {
+        instance = this;
+
         shieldPointText = GameObject.Find(Constants.UI_SHIELD_POINT_TEXT).GetComponent<Text>();
         healthPointText = GameObject.Find(Constants.UI_HEALTH_POINT_TEXT).GetComponent<Text>();
         attackPointText = GameObject.Find(Constants.UI_ATTACK_POINT_TEXT).GetComponent<Text>();

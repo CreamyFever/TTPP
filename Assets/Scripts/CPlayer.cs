@@ -168,6 +168,7 @@ public class CPlayer : MonoBehaviour
         if (CGameManager.Instance.CurrentWave == CGameManager.Instance.levelData.waveList.Count - 1) // 最後のウェイブだったら
         {
             StartCoroutine(SpecialEvent(Constants.SOUND_ID_CLEAR, null, CSoundManager.Instance.ChangeBgm));
+            CGameManager.Instance.OpenNextStage();
         }
         else if (CGameManager.Instance.CurrentWave == CGameManager.Instance.levelData.waveList.Count - 2)    // ボスウェイブを前にしたら
         {

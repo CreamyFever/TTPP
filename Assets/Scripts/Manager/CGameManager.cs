@@ -52,6 +52,7 @@ public class CGameManager : CSingletonPattern<CGameManager>
         set { currentWave = value; }
     }
 
+    LevelStatus[] statuses;
 
     private void Awake()
     {
@@ -84,6 +85,9 @@ public class CGameManager : CSingletonPattern<CGameManager>
 
         playLevel = PlayerPrefs.GetInt(Constants.KEY_PLAY_LEVEL);
         currentWave = 0;
+
+        string json = PlayerPrefs.GetString(Constants.KEY_LEVEL_STATUS);
+        statuses = JsonHelper.JsonToArray<LevelStatus>(json);
     }
 
     void GetData()
@@ -97,5 +101,34 @@ public class CGameManager : CSingletonPattern<CGameManager>
         {
             levelDataList.Add(data[i]);
         }
+    }
+
+    void SaveLevelStatus(bool isCleared)
+    {
+        if(isCleared)
+        {
+            statuses[playLevel].clearCount++;
+        }
+
+        string json = JsonHelper.ArrayToJson(statuses);
+        PlayerPrefs.SetString(Constants.KEY_LEVEL_STATUS, json);    // リリースするなら暗号化が必要
+    }
+
+    /// <summary>
+    /// 次のレベルを開放します。
+    /// </summary>
+    public void OpenNextStage()
+    {
+        if(playLevel < statuses.Length - 1)
+        {
+            LevelStatus next = statuses[playLevel + 1];
+
+            if(next.clearCount == Constants.LEVEL_STATUS_LOCKED)
+            {
+                next.clearCount = Constants.LEVEL_STATUS_UNLOCKED;
+            }
+        }
+
+        SaveLevelStatus(true);
     }
 }

@@ -50,6 +50,23 @@ public class CLevelManager : CSingletonPattern<CLevelManager>
         if (levelData == null)
             return;
 
+        // データに異常はないかをチェック
+        if(PlayerPrefs.HasKey(Constants.KEY_LEVEL_STATUS))
+        {
+            string str = PlayerPrefs.GetString(Constants.KEY_LEVEL_STATUS);   // リリースするなら暗号化が必要
+            levelStatuses = JsonHelper.JsonToArray<LevelStatus>(str);
+
+            // セーブされているStatusデータの数とレベルデータの数が一致すれば異常なし。
+            if (levelStatuses.Length == LevelData.Length)
+            {
+                return;
+            }
+
+            // 一致しないなら、削除してからセーブしなおす。
+            PlayerPrefs.DeleteKey(Constants.KEY_LEVEL_STATUS);
+        }
+        
+
         int len = LevelData.Length;
 
         LevelStatus[] statuses = new LevelStatus[len];
@@ -63,7 +80,6 @@ public class CLevelManager : CSingletonPattern<CLevelManager>
         }
 
         statuses[0].clearCount = Constants.LEVEL_STATUS_UNLOCKED;
-        statuses[1].clearCount = Constants.LEVEL_STATUS_UNLOCKED;
 
         this.levelStatuses = statuses;
 

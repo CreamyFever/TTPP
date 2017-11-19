@@ -38,7 +38,7 @@ public class CPlayer : MonoBehaviour
         CUIManager.Instance.ShowComboUI(combo, needToCombo);
         CUIManager.Instance.ShowBottomUI(info, touchedPanelCount);
 
-        if (wavePanelCount == CSpawnManager.Instance.AllPanelCount)
+        if (wavePanelCount == CGameManager.Instance.AllPanelCount)
         {
             AttackAllEnemy();
         }
@@ -93,11 +93,11 @@ public class CPlayer : MonoBehaviour
         info.shieldPoint = shieldPoint;
         info.attackPoint = attackPoint;
 
-        CSpawnManager.Instance.ClearAllPanels();
+        CGameManager.Instance.ClearAllPanels();
         InitializePlayerValue();
         wavePanelCount = 0;
 
-        CSpawnManager.Instance.InitializeToSpawnPanels();
+        CGameManager.Instance.InitializeToSpawnPanels();
     }
 
     /// <summary>
@@ -124,7 +124,7 @@ public class CPlayer : MonoBehaviour
           
         if (CUtility.GetEnemyCount() == 0 && enemy.enemyInfo.healthPoint <= 0.0f)       // 残りの１体を倒したら、次のウェイブへ
         {
-            CSpawnManager.Instance.ClearAllPanels();
+            CGameManager.Instance.ClearAllPanels();
 
             yield return new WaitForSeconds(2.0f);
 
@@ -185,8 +185,8 @@ public class CPlayer : MonoBehaviour
     void NextWave()
     {
         CGameManager.Instance.CurrentWave++;
-        CSpawnManager.Instance.InitializeToSpawnPanels();
-        CSpawnManager.Instance.InitializeToSpawnEnemy();
+        CGameManager.Instance.InitializeToSpawnPanels();
+        CGameManager.Instance.InitializeToSpawnEnemy();
     }
     
 
@@ -224,7 +224,7 @@ public class CPlayer : MonoBehaviour
         }
         else
         {                               // 倒しきれなかったら、パネルを生成しなおす。
-            CSpawnManager.Instance.InitializeToSpawnPanels();
+            CGameManager.Instance.InitializeToSpawnPanels();
         }
 
         yield break;
@@ -307,7 +307,7 @@ public class CPlayer : MonoBehaviour
         if (info.healthPoint <= 0.0f)
         {
             isAlive = false;
-            CSpawnManager.Instance.ClearAllPanels();
+            CGameManager.Instance.ClearAllPanels();
             CUIManager.Instance.ShowGameOverPanel(true);    // ゲームオーバーパネルを有効にする。
         }
     }

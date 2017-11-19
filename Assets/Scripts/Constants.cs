@@ -10,10 +10,20 @@ public struct Constants
     public const string LEVEL_DATA_RES_PATH = DATA_RSC_FOLDER + "/LevelData";
 
 
+    #region SceneName
+    public const string SCENE_TITLE = "Title";
+    public const string SCENE_LOBBY = "Lobby";
+    public const string SCENE_LOAD = "Load";
+    public const string SCENE_GAME = "Game";
+    #endregion
+
+    public const string KEY_PLAY_MODE = "PLAY_MODE";
     public const string KEY_PLAY_LEVEL = "PLAY_LEVEL";
     public const string KEY_LEVEL_STATUS = "LEVEL_STATUS";
 
     public const string KEY_LEVEL_DATA = "LEVEL_DATA";
+    public const string KEY_NEXT_SCENE = "NEXT_SCENE";
+    public const string KEY_CURRENT_SCENE = "CURRENT_SCENE";
 
     public const int LEVEL_STATUS_LOCKED = -1;
     public const int LEVEL_STATUS_UNLOCKED = 0;
@@ -62,9 +72,9 @@ public struct Constants
     public const int UI_ENEMY_LEFT_TURN_TEXT = 3;
     #endregion
 
-    #region
+    #region Sounds
     public const int SOUND_BGM_TITLE = 0;
-    public const int SOUND_BGM_SELECT_LEVEL = 1;
+    public const int SOUND_BGM_LOBBY = 1;
     public const int SOUND_BGM_GAME_FIELD = 2;
     public const int SOUND_BGM_BOSS = 3;
     public const int SOUND_BGM_RESULT = 4;
